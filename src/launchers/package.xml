@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+<package format="3">
+
+    <name>launchers</name>
+    <version>0.0.1</version>
+    <description>Launchers for Bunker Mini and its sensors</description>
+    <maintainer email="leonardo.gargani@mail.polimi.it">Leonardo Gargani</maintainer>
+    <license>Apache License 2.0</license>
+
+    <buildtool_depend>ament_cmake</buildtool_depend>
+    <exec_depend>launch_ros</exec_depend>
+    <build_depend>ros_environment</build_depend>
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+
+    <depend>rclcpp</depend>
+    <depend>nav_msgs</depend>
+    <depend>geometry_msgs</depend>
+
+</package>

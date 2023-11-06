@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="d435_description"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="d435_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/marco/bunker_sensors_ros2/src/urdf_description/meshes/sensors/camera_link.stl" scale="1.5 1.5 1.5" />
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.5 0.5 0.5 1" />
+            </material>
+        </visual>
+    </link>
+
+</robot>

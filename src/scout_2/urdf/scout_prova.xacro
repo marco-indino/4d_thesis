@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+
+<robot name="scout_v2" 
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:arg name="robot_namespace" default="/scout_2_0" />
+    <xacro:arg name="urdf_extras" default="empty.urdf" />
+    <!-- Variables -->
+    <xacro:property name="M_PI" value="3.14159"/>
+
+    <!-- Vehicle Geometries -->
+    <xacro:property name="base_x_size" value="0.9250000" />
+    <xacro:property name="base_y_size" value="0.380000" />
+    <xacro:property name="base_z_size" value="0.210000" />
+
+    <xacro:property name="wheelbase" value="0.498" />
+    <xacro:property name="track" value="0.58306" />
+    <xacro:property name="wheel_vertical_offset" value="-0.0702" />
+
+    <xacro:property name="wheel_length" value="1.1653e-01" />
+    <xacro:property name="wheel_radius" value="1.6459e-01" />
+
+    <!-- Base link -->
+
+    <link name= "base_link">
+
+    </link>
+
+    <!-- Chassis link -->
+
+    <joint name="chassis_joint" type="fixed">
+        <origin xyz="0 0 0.23479" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="chassis_link" />
+    </joint>
+
+    
+    <link name="chassis_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/base_link.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="${base_x_size} ${base_y_size} ${base_z_size}"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="40" />
+            <origin xyz="0.0 0.0 0.0" />
+            <inertia ixx="2.288641" ixy="0" ixz="0" iyy="5.103976" iyz="0" izz="3.431465" />
+        </inertial>
+
+    </link>
+
+
+    <!-- Wheels Link-->
+
+    <link name="front_right_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171" />
+        </inertial>
+        <visual>
+            <origin rpy="-1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type1.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.16459" length="0.11653" /> 
+            </geometry>
+            <contact>
+                <ode>
+                    <min_depth>0.001</min_depth>
+                </ode>
+            </contact>
+        </collision>
+    </link>
+
+    <joint name="front_right_wheel" type="continuous">
+        <parent link="chassis_link"/>
+        <child link="front_right_wheel_link"/>
+        <origin rpy="1.570795 0 0" xyz="0.249 -0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 0 -1"/>
+        <limit effort="200" velocity="1.5"/>
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+
+
+   
+    <link name="front_left_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171" />
+        </inertial>
+        <visual>
+            <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type2.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.16459" length="0.11653"/>
+            </geometry>
+            <contact>
+                <ode>
+                    <min_depth>0.001</min_depth>
+                </ode>
+            </contact>            
+        </collision>
+    </link>
+
+
+    <joint name="front_left_wheel" type="continuous">
+        <parent link="chassis_link"/>
+        <child link="front_left_wheel_link"/>
+        <origin rpy="-1.570795 0 0" xyz="0.249 0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+        <limit effort="200" velocity="1.5"/>
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+
+ 
+    
+    <link name="rear_left_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171" />
+        </inertial>
+        <visual>
+            <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type1.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.16459" length="0.11653"/> 
+            </geometry>
+            <contact>
+                <ode>
+                    <min_depth>0.001</min_depth>
+                </ode>
+            </contact>            
+        </collision>
+    </link>
+
+
+    <joint name="rear_left_wheel" type="continuous">
+        <parent link="chassis_link"/>
+        <child link="rear_left_wheel_link"/>
+        <origin rpy="-1.570795 0 0" xyz="-0.249 0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 0 1"/>
+        <limit effort="200" velocity="1.5" />
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+
+    <link name="rear_right_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171" />
+        </inertial>
+        <visual>
+            <origin rpy="-1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type2.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+               <cylinder radius="0.16459" length="0.11653"/> 
+            </geometry>
+            <contact>
+                <ode>
+                    <min_depth>0.001</min_depth>
+                </ode>
+            </contact>
+        </collision>
+    </link>
+    
+
+    <joint name="rear_right_wheel" type="continuous">
+        <parent link="chassis_link"/>
+        <child link="rear_right_wheel_link"/>
+        <origin rpy="1.570795 0 0" xyz="-0.249 -0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 0 -1"/>
+        <limit effort="200" velocity="1.5"/>
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+
+
+
+
+
+
+    <!-- Additional definitions -->
+    <xacro:include filename="$(arg urdf_extras)" />
+
+    <!-- Gazebo definitions  -->
+    <xacro:include filename="$(find scout_2)/urdf/scout_v2.gazebo" />
+</robot>

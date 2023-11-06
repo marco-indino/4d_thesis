@@ -1,0 +1,288 @@
+<?xml version="1.0" ?>
+<robot name="scout_description">
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/base_link.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.008"/>
+            <geometry>
+                <box size="0.925 0.38 0.21"/>
+            </geometry>
+        </collision>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.034999999999999996"/>
+            <geometry>
+                <box size="0.15416666666666667 0.627 0.06999999999999999"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="base_footprint"/>
+    <joint name="base_footprint_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 -0.23479"/>
+        <parent link="base_link"/>
+        <child link="base_footprint"/>
+    </joint>
+    <link name="inertial_link">
+        <inertial>
+            <mass value="40"/>
+            <origin xyz="0.0 0.0 0.0"/>
+            <inertia ixx="2.288641" ixy="0" ixz="0" iyy="5.103976" iyz="0" izz="3.431465"/>
+        </inertial>
+    </link>
+    <joint name="inertial_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="inertial_link"/>
+    </joint>
+    <link name="front_right_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type1.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.11653" radius="0.16459"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo reference="front_right_wheel_link">
+        <kp>1000000000.0</kp>
+        <kd>0.0</kd>
+        <mu1>0.9</mu1>
+        <mu2>0.7</mu2>
+        <minDepth>0.001</minDepth>
+        <fdir1>1 0 0</fdir1>
+    </gazebo>
+
+    <joint name="front_right_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="front_right_wheel_link"/>
+        <origin rpy="3.14 0 0" xyz="0.249 -0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="1000" velocity="1.5"/>
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+   
+    <link name="front_left_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type2.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.11653" radius="0.16459"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <gazebo reference="front_left_wheel_link">
+        <kp>1000000000.0</kp>
+        <kd>0.0</kd>
+        <mu1>0.9</mu1>
+        <mu2>0.7</mu2>
+        <minDepth>0.001</minDepth>
+        <fdir1>1 0 0</fdir1>
+    </gazebo>
+
+    <joint name="front_left_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="front_left_wheel_link"/>
+        <origin rpy="0 0 0" xyz="0.249 0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="1000" velocity="1.5"/>
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+    
+    <link name="rear_left_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type1.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.11653" radius="0.16459"/>
+            </geometry>
+        </collision>
+    </link>
+    
+    <gazebo reference="rear_left_wheel_link"> 
+        <kp>1000000000.0</kp>
+        <kd>0.0</kd>
+        <mu1>0.9</mu1>
+        <mu2>0.7</mu2>
+        <minDepth>0.001</minDepth>
+        <fdir1>1 0 0</fdir1>
+    </gazebo>
+
+    <joint name="rear_left_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="rear_left_wheel_link"/>
+        <origin rpy="0 0 0" xyz="-0.249 0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="1000" velocity="1.5" />
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+    
+    <link name="rear_right_wheel_link">
+        <inertial>
+            <mass value="3"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="0.7171" ixy="0" ixz="0" iyy="0.1361" iyz="0" izz="0.7171"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/wheel_type2.dae"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.11653" radius="0.16459"/>
+            </geometry>
+        </collision>
+    </link>
+    
+    <gazebo reference="rear_right_wheel_link">
+        <kp>1000000000.0</kp>
+        <kd>0.0</kd>
+        <mu1>0.9</mu1>
+        <mu2>0.7</mu2>
+        <minDepth>0.001</minDepth>
+        <fdir1>1 0 0</fdir1>
+    </gazebo>
+
+    <joint name="rear_right_wheel" type="continuous">
+        <parent link="base_link"/>
+        <child link="rear_right_wheel_link"/>
+        <origin rpy="3.14 0 0" xyz="-0.249 -0.29153 -0.0702"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="1000" velocity="1.5"/>
+        <dynamics damping="0.0" friction="20" />
+    </joint>
+
+
+    <link name="os_sensor_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/laser_link.stl" scale="1.5 1.5 1.5" />
+            </geometry>
+            <material name="Gray">
+                <color rgba="0.5 0.5 0.5 1" />
+            </material>
+        </visual>
+    </link>
+
+    <joint name="os_sensor" type="fixed">
+        <parent link="base_link"/>
+        <child link="os_sensor_link"/>
+        <origin rpy="0 0 0" xyz="0.1 0.0 0.714"/>
+    </joint>
+
+
+    <!-- Ros2 control -->
+    <!-- <ros2_control name="GazeboSimSystem" type="system">
+
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware> 
+        
+        <joint name="rear_right_wheel">
+            <command_interface name="position" />
+            <state_interface name="position">
+            <state_interface name="velocity"/>
+        <joint>
+
+        <joint name="rear_left_wheel">
+            <command_interface name="position" />
+            <state_interface name="position">
+            <state_interface name="velocity"/>
+        <joint>
+
+        <joint name="front_right_wheel">
+            <command_interface name="position" />
+            <state_interface name="position">
+            <state_interface name="velocity"/>
+        <joint>
+
+        <joint name="front_left_wheel">
+            <command_interface name="position" />
+            <state_interface name="position">
+            <state_interface name="velocity"/>
+        <joint>
+
+    </ros2_control> -->
+
+<!--     
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+            <parameters>$(find scout_2)/config/controller_configuration.yaml</parameters>
+        </plugin>
+    </gazebo>  -->
+
+    <!-- <gazebo>
+        <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+            <updateRate>100.0</updateRate>
+            <robotNamespace></robotNamespace>
+            <leftFrontJoint>front_left_wheel</leftFrontJoint>
+            <rightFrontJoint>front_right_wheel</rightFrontJoint>
+            <leftRearJoint>rear_left_wheel</leftRearJoint>
+            <rightRearJoint>rear_right_wheel</rightRearJoint>
+            <wheelSeparation>4</wheelSeparation>
+            <wheelDiameter>0.32918</wheelDiameter>
+            <robotBaseFrame>base_link</robotBaseFrame>
+            <torque>1000</torque>
+            <commandTopic>cmd_vel</commandTopic>
+            <broadcastTF>true</broadcastTF>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <covariance_x>0.000100</covariance_x>
+            <covariance_y>0.000100</covariance_y>
+            <covariance_yaw>0.010000</covariance_yaw>
+        </plugin>
+    </gazebo>
+
+
+    <gazebo>
+        <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+            <commandTopic>cmd_vel</commandTopic>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <odometryRate>20.0</odometryRate>
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+        </plugin>
+    </gazebo>
+ -->
+
+
+</robot>
