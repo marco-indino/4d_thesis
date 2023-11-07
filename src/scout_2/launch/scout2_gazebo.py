@@ -4,6 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch.actions import DeclareLaunchArgument
 from launch import LaunchDescription
+from launch.substitutions import LaunchConfiguration
 from launch.actions import ExecuteProcess , IncludeLaunchDescription, RegisterEventHandler
 from launch.event_handlers import ( OnProcessStart, OnProcessExit)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -19,24 +20,17 @@ def generate_launch_description():
     package_name = 'scout_2'
     world_file = 'labirinto_test.world'
     pkg_world = get_package_share_directory(package_name)
+    robot_localization_file_path = os.path.join(pkg_world, 'config/ekf_w_gps.yaml')
+
+    #use_sim_time = LaunchConfiguration('use_sim_time')
 
     rviz_config = os.path.join(
         get_package_share_directory('scout_2'), 'rviz', 'main.rviz'
     )
     
     gazebo = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('gazebo_ros'),'launch'),'/gazebo.launch.py']),
-            )
+                PythonLaunchDescriptionSource([os.path.join(get_package_share_directory('gazebo_ros'),'launch'),'/gazebo.launch.py']),)
     
-    
-    
-    # Position and orientation
-    # [X, Y, Z]
-    #position = [0.0, 0.0, 0.0]
-    # [Roll, Pitch, Yaw]
-    #orientation = [0.0, 0.0, 0.0]
-    # Base Name or robot
-    robot_base_name = "scout_2"
 
     # package_path = os.path.join(get_package_share_directory('scout_2'))
 
@@ -46,7 +40,7 @@ def generate_launch_description():
     # xacro.process_doc(doc)
     # params = {'robot_description':doc.toxml()}
 
-    doc = xacro.process_file('/home/marco/gazebo_ws/src/scout_2/urdf/scout_prova.xacro')
+    doc = xacro.process_file('/home/marco/4d_thesis/src/scout_2/urdf/scout_prova.xacro')
     robot_desc = doc.toprettyxml(indent='  ')
     params = {'robot_description': robot_desc}
 
@@ -59,74 +53,65 @@ def generate_launch_description():
     )
     
 
-    entity_name = robot_base_name #+"-"+str(int(random.random()*100000))
+    #entity_name = robot_base_name #+"-"+str(int(random.random()*100000))
     
     spawn_entity = Node(package='gazebo_ros',
                         executable='spawn_entity.py',
                         name = 'spawn_entity',
                         arguments=['-topic', 'robot_description',
-                                   '-entity', 'scout_2'],
-                        # arguments=['-entity',entity_name,
-                        #             '-x', str(position[0]), '-y', str(position[1]), '-z', str(position[2]),'-R', str(orientation[0]), '-P', str(orientation[1]), '-Y', str(orientation[2]),
-                        #             '-topic', '/robot_description'
-                        #             ],
+                                   '-entity', 'scout2'],
                         output='screen')    
+
+    # Start robot localization using an Extended Kalman filter...odom->base_footprint transform
+    start_robot_localization_local_cmd = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node_odom',
+        output='screen',
+        parameters=[robot_localization_file_path],
+        remappings=[('odometry/filtered', 'odometry/local')],
+        )
     
-
-    diff_drive_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["diff_drive_controller"],
-    )
-
-    joint_broad_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["joint_state_broadcaster"],
+    #Start robot localization using an Extended Kalman filter...map->odom transform
+    start_robot_localization_global_cmd = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node_map',
+        output='screen',
+        parameters=[robot_localization_file_path],
+        remappings=[('odometry/filtered', 'odometry/global')],
+        )
+    
+    # Start the navsat transform node which converts GPS data into the world coordinate frame
+    start_navsat_transform_cmd = Node(
+        package='robot_localization',
+        executable='navsat_transform_node',
+        name='navsat_transform',
+        output='screen',
+        parameters=[robot_localization_file_path],
+        remappings=[("imu/data", "imu/data"),
+                    ("gps/fix", "gps/fix"),
+                    ("gps/filtered", "gps/filtered"),
+                    ("odometry/gps", "odometry/gps"),
+                    ("odometry/filtered", "odometry/global")],
     )
 
     rviz_node = Node(
         package= "rviz2",
         executable= "rviz2",
-        arguments=['-d', rviz_config]
+        arguments=['-d', rviz_config],
 
     )
 
-    # world_arg = DeclareLaunchArgument(
-    #       'world',
-    #       default_value=[os.path.join(pkg_world, 'worlds', world_file),''],
-    #       description='SDF world file')  
-    
-    # load_joint_state_controller = ExecuteProcess(
-    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active','--controller-manager','/joint_state_broadcaster'],
-    #     output='screen'
-    # )
-
-    # load_diff_drive_controller = ExecuteProcess(
-    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active','--controller-manager', '/diff_drive_controller'],
-    #     output='screen'
-    #)
     
     return LaunchDescription([
         node_robot_state_publisher,
         gazebo,
         spawn_entity,
+        start_robot_localization_local_cmd,
+        start_robot_localization_global_cmd,
+        start_navsat_transform_cmd,
         rviz_node,
-        #diff_drive_spawner,
-        #joint_broad_spawner,
-        #world_arg,
-        #load_joint_state_controller,
-        # RegisterEventHandler(
-        #     event_handler= OnProcessExit(
-        #         target_action=spawn_entity,
-        #         on_exit=[joint_broad_spawner],
-        #     )
-        # ),
-        # RegisterEventHandler(
-        #     event_handler= OnProcessExit(
-        #         target_action=joint_broad_spawner,
-        #         on_exit=[diff_drive_spawner],
-        #     )
-        # ),
+ 
 
     ])

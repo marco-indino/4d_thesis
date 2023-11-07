@@ -1,0 +1,37 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/marco/4d_thesis/install/theora_image_transport/include/**",
+        "/home/marco/4d_thesis/install/scout_msgs/include/**",
+        "/home/marco/4d_thesis/install/realsense2_camera/include/**",
+        "/home/marco/4d_thesis/install/realsense2_camera_msgs/include/**",
+        "/home/marco/4d_thesis/install/ouster_ros/include/**",
+        "/home/marco/4d_thesis/install/ouster_srvs/include/**",
+        "/home/marco/4d_thesis/install/ouster_msgs/include/**",
+        "/home/marco/4d_thesis/install/compressed_image_transport/include/**",
+        "/home/marco/4d_thesis/install/compressed_depth_image_transport/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/marco/4d_thesis/src/image_transport/image_transport_plugins-humble/compressed_depth_image_transport/include/**",
+        "/home/marco/4d_thesis/src/image_transport/image_transport_plugins-humble/compressed_image_transport/include/**",
+        "/home/marco/4d_thesis/src/image_transport/image_transport_plugins-humble/theora_image_transport/include/**",
+        "/home/marco/4d_thesis/src/ouster-ros/ouster-ros/include/**",
+        "/home/marco/4d_thesis/src/realsense-ros/realsense2_camera/include/**",
+        "/home/marco/4d_thesis/src/saving_pose/save_poses/include/**",
+        "/home/marco/4d_thesis/src/scout_ros2/scout_base/include/**",
+        "/home/marco/4d_thesis/src/ugv_sdk/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
