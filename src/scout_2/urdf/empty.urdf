@@ -73,7 +73,7 @@
     <gazebo reference="imu_sensor_link">
       <sensor name="imu" type="imu">
         <always_on>true</always_on>
-        <update_rate>100</update_rate>
+        <update_rate>200</update_rate>
         <visualize>true</visualize>
         <imu>
           <angular_velocity>
@@ -81,24 +81,18 @@
               <noise type="gaussian">
                   <mean>0.0</mean>
                   <stddev>2e-4</stddev>
-                  <bias_mean>0.0000075</bias_mean>
-                  <bias_stddev>0.0000008</bias_stddev>
                 </noise>
               </x>
               <y>
                 <noise type="gaussian">
                   <mean>0.0</mean>
                   <stddev>2e-4</stddev>
-                  <bias_mean>0.0000075</bias_mean>
-                  <bias_stddev>0.0000008</bias_stddev>
                 </noise>
               </y>
               <z>
                 <noise type="gaussian">
                   <mean>0.0</mean>
                   <stddev>2e-4</stddev>
-                  <bias_mean>0.0000075</bias_mean>
-                  <bias_stddev>0.0000008</bias_stddev>
                 </noise>
               </z>
             </angular_velocity>
@@ -107,24 +101,18 @@
                 <noise type="gaussian">
                   <mean>0.0</mean>
                   <stddev>1.7e-2</stddev>
-                  <bias_mean>0.1</bias_mean>
-                  <bias_stddev>0.001</bias_stddev>
                 </noise>
               </x>
               <y>
                 <noise type="gaussian">
                   <mean>0.0</mean>
                   <stddev>1.7e-2</stddev>
-                  <bias_mean>0.1</bias_mean>
-                  <bias_stddev>0.001</bias_stddev>
                 </noise>
               </y>
               <z>
                 <noise type="gaussian">
                   <mean>0.0</mean>
                   <stddev>1.7e-2</stddev>
-                  <bias_mean>0.1</bias_mean>
-                  <bias_stddev>0.001</bias_stddev>
                 </noise>
               </z>
             </linear_acceleration>
