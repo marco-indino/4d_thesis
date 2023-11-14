@@ -12,7 +12,7 @@ def generate_launch_description():
     gps_wpf_dir = get_package_share_directory(
         "scout_2")
     launch_dir = os.path.join(gps_wpf_dir, 'launch')
-    world = os.path.join(gps_wpf_dir, "worlds", "sonoma_raceway.world")
+    world = os.path.join(gps_wpf_dir, "worlds", "sonoma_raceway_modi.world")
 
     # urdf = os.path.join(gps_wpf_dir, 'urdf', 'scout.urdf')
     # with open(urdf, 'r') as infp:
