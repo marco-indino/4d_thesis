@@ -64,11 +64,11 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
+        base_footprint:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        chassis_link:
+        base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -79,6 +79,15 @@ Visualization Manager:
           Show Trail: false
           Value: true
         front_right_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        gps_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        imu_sensor_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -111,34 +120,44 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        base_footprint:
+          Value: true
         base_link:
-          Value: true
-        chassis_link:
-          Value: true
+          Value: false
         front_left_wheel_link:
-          Value: true
+          Value: false
         front_right_wheel_link:
-          Value: true
+          Value: false
+        gps_link:
+          Value: false
+        imu_sensor_link:
+          Value: false
         map:
           Value: true
         odom:
           Value: true
         os_sensor_link:
-          Value: true
+          Value: false
         rear_left_wheel_link:
-          Value: true
+          Value: false
         rear_right_wheel_link:
+          Value: false
+        utm:
           Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
-      Show Names: false
+      Show Names: true
       Tree:
         map:
           odom:
-            base_link:
-              chassis_link:
+            base_footprint:
+              base_link:
+                gps_link:
+                  {}
+                imu_sensor_link:
+                  {}
                 os_sensor_link:
                   {}
               front_left_wheel_link:
@@ -149,6 +168,8 @@ Visualization Manager:
                 {}
               rear_right_wheel_link:
                 {}
+          utm:
+            {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -545,25 +566,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 27.850099563598633
+      Distance: 8.609977722167969
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.044467076659202576
-        Y: -0.38726311922073364
-        Z: 0
+        X: -0.15606282651424408
+        Y: -0.7911346554756165
+        Z: -0.00040387059561908245
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 0.6497974395751953
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz_default_plugins)
-      Yaw: -1.5707963705062866
+      Yaw: 4.702383518218994
     Saved: ~
 Window Geometry:
   Displays:

@@ -66,7 +66,7 @@ def generate_launch_description():
 
         DeclareLaunchArgument(
             'map',
-            default_value=os.path.join(bringup_dir, 'maps', 'labirinto.yaml'),
+            default_value=os.path.join(bringup_dir, 'maps', 'labirinto_gps.yaml'),
             description='Full path to map yaml file to load'),
 
         DeclareLaunchArgument(

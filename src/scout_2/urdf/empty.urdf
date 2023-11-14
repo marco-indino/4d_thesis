@@ -18,7 +18,7 @@
     </link>
 
     <joint name="os_sensor" type="fixed">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="os_sensor_link"/>
         <origin rpy="0 0 0" xyz="0.1 0.0 0.714"/>
     </joint>
@@ -65,7 +65,7 @@
     </link>
 
     <joint name="imu_sensor" type="fixed">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="imu_sensor_link"/>
         <origin rpy="0 0 0" xyz="0.0 0.0 0.50"/>
     </joint>
@@ -142,7 +142,7 @@
     <link name="gps_link"></link>
 
     <joint name="gps_sensor" type="fixed">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="gps_link"/>
         <origin rpy="0 0 0" xyz="0.0 0.0 0.40"/>
     </joint>
@@ -168,7 +168,7 @@
             </vertical>
           </position_sensing>
         </gps>
-        <plugin name="my_gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+        <plugin name="gps_controller" filename="libgazebo_ros_gps_sensor.so">
           <ros>
             <remapping>~/out:=/gps/fix</remapping>
           </ros>

@@ -22,20 +22,18 @@
 
     <!-- Base link -->
 
-    <link name= "base_link">
-
-    </link>
+    <link name= "base_footprint"/>
 
     <!-- Chassis link -->
 
     <joint name="chassis_joint" type="fixed">
         <origin xyz="0 0 0.23479" rpy="0 0 0" />
-        <parent link="base_link" />
-        <child link="chassis_link" />
+        <parent link="base_footprint" />
+        <child link="base_link" />
     </joint>
 
     
-    <link name="chassis_link">
+    <link name="base_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -85,7 +83,7 @@
     </link>
 
     <joint name="front_right_wheel" type="continuous">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="front_right_wheel_link"/>
         <origin rpy="1.570795 0 0" xyz="0.249 -0.29153 -0.0702"/>
         <axis rpy="0 0 0" xyz="0 0 -1"/>
@@ -122,7 +120,7 @@
 
 
     <joint name="front_left_wheel" type="continuous">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="front_left_wheel_link"/>
         <origin rpy="-1.570795 0 0" xyz="0.249 0.29153 -0.0702"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
@@ -159,7 +157,7 @@
 
 
     <joint name="rear_left_wheel" type="continuous">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="rear_left_wheel_link"/>
         <origin rpy="-1.570795 0 0" xyz="-0.249 0.29153 -0.0702"/>
         <axis rpy="0 0 0" xyz="0 0 1"/>
@@ -194,7 +192,7 @@
     
 
     <joint name="rear_right_wheel" type="continuous">
-        <parent link="chassis_link"/>
+        <parent link="base_link"/>
         <child link="rear_right_wheel_link"/>
         <origin rpy="1.570795 0 0" xyz="-0.249 -0.29153 -0.0702"/>
         <axis rpy="0 0 0" xyz="0 0 -1"/>

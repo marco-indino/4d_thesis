@@ -20,9 +20,7 @@ def generate_launch_description():
     package_name = 'scout_2'
     world_file = 'labirinto_test.world'
     pkg_world = get_package_share_directory(package_name)
-    robot_localization_file_path = os.path.join(pkg_world, 'config/ekf_w_gps.yaml')
-
-    #use_sim_time = LaunchConfiguration('use_sim_time')
+    #robot_localization_file_path = os.path.join(pkg_world, 'config/ekf_w_gps.yaml')
 
     rviz_config = os.path.join(
         get_package_share_directory('scout_2'), 'rviz', 'main.rviz'
@@ -51,6 +49,14 @@ def generate_launch_description():
         output='screen',
         parameters=[params]
     )
+
+    imu_filter_node = Node(
+        package='imu_complementary_filter',
+        executable='complementary_filter_node',
+        output='screen',
+        parameters=[params],
+        remappings=[('imu/data_raw','imu')]
+    )
     
 
     #entity_name = robot_base_name #+"-"+str(int(random.random()*100000))
@@ -62,39 +68,37 @@ def generate_launch_description():
                                    '-entity', 'scout2'],
                         output='screen')    
 
-    # Start robot localization using an Extended Kalman filter...odom->base_footprint transform
-    start_robot_localization_local_cmd = Node(
-        package='robot_localization',
-        executable='ekf_node',
-        name='ekf_filter_node_odom',
-        output='screen',
-        parameters=[robot_localization_file_path],
-        remappings=[('odometry/filtered', 'odometry/local')],
-        )
+    # # Start robot localization using an Extended Kalman filter...odom->base_link transform
+    # start_robot_localization_local_cmd = Node(
+    #     package='robot_localization',
+    #     executable='ekf_node',
+    #     name='ekf_filter_node_odom',
+    #     output='screen',
+    #     parameters=[robot_localization_file_path],
+    #     remappings=[('odometry/filtered', '/odometry/local')],
+    #     )
     
-    #Start robot localization using an Extended Kalman filter...map->odom transform
-    start_robot_localization_global_cmd = Node(
-        package='robot_localization',
-        executable='ekf_node',
-        name='ekf_filter_node_map',
-        output='screen',
-        parameters=[robot_localization_file_path],
-        remappings=[('odometry/filtered', 'odometry/global')],
-        )
+    # #Start robot localization using an Extended Kalman filter...map->odom transform
+    # start_robot_localization_global_cmd = Node(
+    #     package='robot_localization',
+    #     executable='ekf_node',
+    #     name='ekf_filter_node_map',
+    #     output='screen',
+    #     parameters=[robot_localization_file_path],
+    #     remappings=[('odometry/filtered', '/odometry/global')],
+    #     )
     
-    # Start the navsat transform node which converts GPS data into the world coordinate frame
-    start_navsat_transform_cmd = Node(
-        package='robot_localization',
-        executable='navsat_transform_node',
-        name='navsat_transform',
-        output='screen',
-        parameters=[robot_localization_file_path],
-        remappings=[("imu/data", "imu/data"),
-                    ("gps/fix", "gps/fix"),
-                    ("gps/filtered", "gps/filtered"),
-                    ("odometry/gps", "odometry/gps"),
-                    ("odometry/filtered", "odometry/global")],
-    )
+    # # Start the navsat transform node which converts GPS data into the world coordinate frame
+    # start_navsat_transform_cmd = Node(
+    #     package='robot_localization',
+    #     executable='navsat_transform_node',
+    #     name='navsat_transform',
+    #     output='screen',
+    #     parameters=[robot_localization_file_path],
+    #     remappings=[("imu/data", "/imu/data"),
+    #                 ("gps/fix", "/gps/fix"),
+    #                 ("odometry/filtered", "/odometry/global")],
+    # )
 
     rviz_node = Node(
         package= "rviz2",
@@ -105,12 +109,13 @@ def generate_launch_description():
 
     
     return LaunchDescription([
-        node_robot_state_publisher,
         gazebo,
         spawn_entity,
-        start_robot_localization_local_cmd,
-        start_robot_localization_global_cmd,
-        start_navsat_transform_cmd,
+        node_robot_state_publisher,
+        imu_filter_node,
+        #start_robot_localization_local_cmd,
+        #start_robot_localization_global_cmd,
+        #start_navsat_transform_cmd,
         rviz_node,
  
 
