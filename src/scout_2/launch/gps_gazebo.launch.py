@@ -13,7 +13,8 @@ def generate_launch_description():
         "scout_2")
     launch_dir = os.path.join(gps_wpf_dir, 'launch')
     world = os.path.join(gps_wpf_dir, "worlds", "sonoma_raceway_modi.world")
-
+    world1= os.path.join(gps_wpf_dir,"worlds","labirinto_test.world")
+    world2=os.path.join(gps_wpf_dir,"worlds","cropfield.world")
     # urdf = os.path.join(gps_wpf_dir, 'urdf', 'scout.urdf')
     # with open(urdf, 'r') as infp:
     #     robot_desc = infp.read()
@@ -42,7 +43,7 @@ def generate_launch_description():
     # Specify the actions
     start_gazebo_server_cmd = ExecuteProcess(
         cmd=['gzserver', '-s', 'libgazebo_ros_init.so',
-             '-s', 'libgazebo_ros_factory.so', world],
+             '-s', 'libgazebo_ros_factory.so', world2],
         cwd=[launch_dir], output='both')
 
     start_gazebo_client_cmd = ExecuteProcess(
@@ -60,7 +61,7 @@ def generate_launch_description():
                         executable='spawn_entity.py',
                         name = 'spawn_entity',
                         arguments=['-topic', 'robot_description',
-                                   '-entity', 'scout2','-x','2.0','-y','-2.5','-z','0.3'],
+                                   '-entity', 'scout2'], #,'-x','2.0','-y','-2.5','-z','0.3'],
                         output='screen') 
 
     # Create the launch description and populate

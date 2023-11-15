@@ -21,14 +21,14 @@ def generate_launch_description():
             launch.actions.DeclareLaunchArgument(
                 "output_location", default_value="~/dual_ekf_navsat_example_debug.txt"
             ),
-            launch_ros.actions.Node(
-                package="robot_localization",
-                executable="ekf_node",
-                name="ekf_filter_node_odom",
-                output="screen",
-                parameters=[rl_params_file, {"use_sim_time": True}],
-                remappings=[("odometry/filtered", "odometry/local")],
-            ),
+            # launch_ros.actions.Node(
+            #     package="robot_localization",
+            #     executable="ekf_node",
+            #     name="ekf_filter_node_odom",
+            #     output="screen",
+            #     parameters=[rl_params_file, {"use_sim_time": True}],
+            #     remappings=[("odometry/filtered", "odometry/local")],
+            #),
             launch_ros.actions.Node(
                 package="robot_localization",
                 executable="ekf_node",
@@ -37,6 +37,7 @@ def generate_launch_description():
                 parameters=[rl_params_file, {"use_sim_time": True}],
                 remappings=[("odometry/filtered", "odometry/global")],
             ),
+
             launch_ros.actions.Node(
                 package="robot_localization",
                 executable="navsat_transform_node",
@@ -50,6 +51,15 @@ def generate_launch_description():
                     ("odometry/gps", "odometry/gps"),
                     ("odometry/filtered", "odometry/global"),
                 ],
+            ),
+
+            launch_ros.actions.Node(
+                package="robot_localization",
+                executable="robot_localization_listener_node",
+                name="robot_localization_listener",
+                output="screen",
+                parameters=[rl_params_file, {"use_sim_time": True}],
+                #remappings=[("odom/filtered","odom")]
             ),
         ]
     )

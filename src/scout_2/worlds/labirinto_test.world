@@ -1,3 +1,4 @@
+<?xml version="1.0" ?>
 <sdf version='1.7'>
   <world name='default'>
     <light name='sun' type='directional'>
@@ -86,7 +87,7 @@
       <surface_model>EARTH_WGS84</surface_model>
       <latitude_deg>0</latitude_deg>
       <longitude_deg>0</longitude_deg>
-      <elevation>100</elevation>
+      <elevation></elevation>
       <heading_deg>180</heading_deg>
     </spherical_coordinates>
     <model name='labirinto'>
