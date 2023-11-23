@@ -37,7 +37,7 @@ def main():
     
 
     positions = []  # Vector to store Odometry messages
-    with open('/home/marco/4d_thesis/src/saving_pose/data_poses.csv', 'r') as file:
+    with open('/home/marco/4d_thesis/src/saving_pose/poses_data.csv', 'r') as file:
         csv_reader = csv.reader(file)
     
         for row in csv_reader:
@@ -59,7 +59,7 @@ def main():
     
 
     # Wait for navigation to fully activate, since autostarting nav2
-    navigator.waitUntilNav2Active(localizer='robot_localization')
+    navigator.waitUntilNav2Active()
     
 
     # If desired, you can change or load the map as well
@@ -167,6 +167,9 @@ def main():
                         #last_j_changed=time.time()
                     #navigator.cancelTask()
                     #sleep(1.0)
+                    distance_x= check_poses[0].pose.position.x - pose_tmp.pose.position.x
+                    distance_y= check_poses[0].pose.position.y - pose_tmp.pose.position.y
+                    distance_tmp= math.sqrt((distance_x*distance_x + distance_y*distance_y))
                     if len(check_poses)<11:
                         navigator.goToPose(check_poses[len(check_poses)-1],'/home/marco/4d_thesis/src/scout_2/config/navigate_to_pose_w_replanning_and_recovery.xml')
                         sleep(3.0)
@@ -223,7 +226,7 @@ def main():
                             if new_feedback and i % 5 == 0:
                                 print('Estimated distance remaining : ' + '{0:.3f}'.format(new_feedback.distance_remaining) )
                             
-                            if new_feedback.distance_remaining > 14.0 :  #parameters to be tuned based on the map and the environment
+                            if new_feedback.distance_remaining > 2*(distance_tmp):  #parameters to be tuned based on the map and the environment
                                 home=1
                                 navigator.cancelTask()
                             

@@ -17,9 +17,10 @@ public:
     std::cout<<"nodo avviato"<<std::endl;
     subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("/odom", 10, std::bind(&PoseCSVLogger::poseCallback, this, std::placeholders::_1));
 
-    //csv_file_.open("/home/marco/4d_thesis/src/saving_pose/poses_data.csv");
-    csv_file_.open("/home/marco/4d_thesis/src/saving_pose/data_poses.csv");
-    //csv_file_ << "X, Y, qZ, qW" << std::endl;
+    csv_file_.open("/home/marco/4d_thesis/src/saving_pose/poses_data.csv");  //labirinto
+    //csv_file_.open("/home/marco/4d_thesis/src/saving_pose/goandturn.csv");   //labirinto test
+    //csv_file_.open("/home/marco/4d_thesis/src/saving_pose/data_poses.csv"); // cropfield
+    //csv_file_ << "X, Y, qZ, qW" << std::endl; 
   }
 
 private:
@@ -54,7 +55,7 @@ private:
     if (delta_x * delta_x + delta_y * delta_y >= distance_threshold * distance_threshold ||
         delta_theta>= orientation_change_threshold || delta_theta<= -orientation_change_threshold)
       {
-        std::ofstream csv_file_("/home/marco/4d_thesis/src/saving_pose/data_poses.csv", std::ios::app);
+        std::ofstream csv_file_("/home/marco/4d_thesis/src/saving_pose/poses_data.csv", std::ios::app);
         if (csv_file_.is_open())                                        
         {
           // Write position x and position y divided by a into the file

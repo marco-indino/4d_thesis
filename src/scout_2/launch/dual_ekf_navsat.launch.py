@@ -53,13 +53,35 @@ def generate_launch_description():
                 ],
             ),
 
-            launch_ros.actions.Node(
-                package="robot_localization",
-                executable="robot_localization_listener_node",
-                name="robot_localization_listener",
-                output="screen",
-                parameters=[rl_params_file, {"use_sim_time": True}],
-                #remappings=[("odom/filtered","odom")]
-            ),
+
+            # launch_ros.actions.Node(
+            #     package="robot_localization",
+            #     executable="test_robot_localization_estimator",
+            #     name="robot_localization_listener",
+            #     output="screen",
+            #     parameters=[rl_params_file, {"use_sim_time": True}],
+            #     remappings=[("odom/filtered","odometry/global"),
+            #                 ("acceleration/filtered","accel/filtered")]
+            # ),
+
+            # launch_ros.actions.Node(
+            #     package="robot_localization",
+            #     executable="filter_base-test",
+            #     name="filter_base",
+            #     output="screen",
+            #     parameters=[rl_params_file, {"use_sim_time": True}],
+            #     # remappings=[("odom/filtered","odometry/global"),
+            #     #             ("acceleration/filtered","accel/filtered")]
+            # ),
+
+            # launch_ros.actions.Node(
+            #     package="robot_localization",
+            #     executable="robot_localization_listener_node",
+            #     name="robot_localization_listener",
+            #     output="screen",
+            #     parameters=[rl_params_file, {"use_sim_time": True}],
+            #     remappings=[("odom/filtered","odometry/global"),
+            #                  ("acceleration/filtered","accel/filtered")]
+            # ),
         ]
     )

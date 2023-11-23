@@ -195,6 +195,8 @@ ekf_filter_node_map:
     # Whether to broadcast the transformation over the /tf topic. Defaults to true if unspecified.
     publish_tf: true
 
+    publish_acceleration: false
+
     # If the filter sees a jump back in time, the filter is reset (convenient for testing with rosbags!)
     #reset_on_time_jump: true
 
@@ -233,8 +235,8 @@ ekf_filter_node_map:
     imu0_config: [false, false, false,
                   false,  false,  true,
                   false, false, false,
-                  false,  false,  false,
-                  false,  false,  false]
+                  false,  false,  true,
+                  true,  true,  true]
     #imu0_nodelay: false
     imu0_differential: true # If using a real robot you might want to set this to true, since usually absolute measurements from real imu's are not very accurate
     imu0_relative: false

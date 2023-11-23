@@ -17,6 +17,7 @@ def generate_launch_description():
         get_package_share_directory('scout_2'), 'rviz', 'main.rviz'
     )
 
+
     namespace = LaunchConfiguration('namespace')
     use_sim_time = LaunchConfiguration('use_sim_time')
     autostart = LaunchConfiguration('autostart')
@@ -136,6 +137,7 @@ def generate_launch_description():
             output='screen',
             parameters=[configured_params],
             remappings=remappings),
+        
 
         Node(
             package='nav2_lifecycle_manager',

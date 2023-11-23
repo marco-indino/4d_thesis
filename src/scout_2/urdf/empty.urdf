@@ -122,6 +122,7 @@
             <argument>~/out:=imu</argument>.
           </ros>
           <initial_orientation_as_reference>false</initial_orientation_as_reference>
+          <gaussian_noise>2e-4</gaussian_noise>
         </plugin>
       </sensor>
     </gazebo>

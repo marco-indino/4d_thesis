@@ -63,6 +63,14 @@ def generate_launch_description():
                         arguments=['-topic', 'robot_description',
                                    '-entity', 'scout2'], #,'-x','2.0','-y','-2.5','-z','0.3'],
                         output='screen') 
+    
+    imu_filter_node = Node(
+        package='imu_complementary_filter',
+        executable='complementary_filter_node',
+        output='screen',
+        parameters=[params],
+        remappings=[('imu/data_raw','imu')]
+    )
 
     # Create the launch description and populate
     ld = LaunchDescription()
@@ -80,5 +88,8 @@ def generate_launch_description():
 
     #spawn_entity
     ld.add_action(spawn_entity)
+
+    #imu fileter
+    ld.add_action(imu_filter_node)
 
     return ld
