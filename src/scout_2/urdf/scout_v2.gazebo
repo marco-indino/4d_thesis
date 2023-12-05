@@ -1,87 +1,7 @@
 <?xml version="1.0"?>
 
-<!-- 
-Reference:
-    [1] https://answers.ros.org/question/246914/four-wheeled-skid-steering-in-gazebo-and-ros-using-gazebo-ros-control/
-    [2] https://answers.ros.org/question/10119/gazebo-controller-for-skid-steering/
-    [3] https://answers.ros.org/question/9640/rotation-error-in-gazebo-simulation/
-    [4] https://www.youtube.com/watch?v=fuRAv6PDwdw 
--->
-
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-    <!-- <xacro:include filename="$(find scout_2)/urdf/scout_wheel.gazebo" /> -->
-
-    <!-- Additional definitions for simulation -->
-    <!-- <gazebo reference="base_link">
-        <material>Gazebo/Grey</material>
-    </gazebo> -->
-
-    <!-- Actuator configurations -->
-    <!-- <xacro:scout_wheel_transmission wheel_prefix="front_right" />
-    <xacro:scout_wheel_transmission wheel_prefix="front_left" />
-    <xacro:scout_wheel_transmission wheel_prefix="rear_left" />
-    <xacro:scout_wheel_transmission wheel_prefix="rear_right" /> -->
-
-    <!-- Controller configurations -->
-    <!-- Ros2 control -->
-    <!-- <ros2_control name="GazeboSystem" type="system">
-
-        <hardware>
-            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-        </hardware>
-
-
-        <joint name="rear_right_wheel">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
-        </joint>
-
-        <joint name="rear_left_wheel">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
-        </joint>
-
-        <joint name="front_right_wheel">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
-        </joint>
-
-        <joint name="front_left_wheel">
-            <command_interface name="velocity">
-                <param name="min">-10</param>
-                <param name="max">10</param>
-            </command_interface>
-            <state_interface name="position"/>
-            <state_interface name="velocity"/>
-        </joint>
-    </ros2_control> -->
-
-    <!-- <gazebo>
-        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>$(find scout_2)/config/controller_configuration.yaml</parameters>
-        </plugin>
-    </gazebo>  -->
-
-    <!-- <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros2_control.so">
-            <robotNamespace>$(arg robot_namespace)</robotNamespace>
-        </plugin>
-    </gazebo> -->
-
-
-
+ 
     <!-- kp spring constant, kd damping constant -->
     <gazebo reference="front_left_wheel_link">
         <mu1>0.9</mu1>
@@ -123,7 +43,7 @@ Reference:
 
     <gazebo>
         <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_diff_drive.so">
-            <update_rate>100.0</update_rate>
+            <update_rate>50.0</update_rate>
             <num_wheel_pairs>2</num_wheel_pairs>
             <left_joint>front_left_wheel</left_joint>
             <left_joint>rear_left_wheel</left_joint>
@@ -155,7 +75,7 @@ Reference:
             <ros>
                 <remapping>~/out:=joint_states</remapping>
             </ros>
-            <update_rate>30</update_rate>
+            <update_rate>100</update_rate>
             <joint_name>front_left_wheel</joint_name>
             <joint_name>front_right_wheel</joint_name>
             <joint_name>rear_left_wheel</joint_name>

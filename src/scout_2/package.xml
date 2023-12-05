@@ -18,6 +18,7 @@
   <exec_depend>rviz</exec_depend>
   <exec_depend>xacro</exec_depend>
   <exec_depend>robot_localization</exec_depend>
+  <depend>rclcpp</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

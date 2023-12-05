@@ -16,15 +16,15 @@ def generate_launch_description():
     return LaunchDescription(
         [
 
-            launch_ros.actions.Node(
-                package="robot_localization",
-                executable="test_robot_localization_estimator",
-                name="robot_localization_listener",
-                output="screen",
-                parameters=[rl_params_file, {"use_sim_time": True}],
-                remappings=[("odom/filtered","odometry/global"),
-                            ("acceleration/filtered","accel/filtered")]
-            ),
+            # launch_ros.actions.Node(
+            #     package="robot_localization",
+            #     executable="test_robot_localization_estimator",
+            #     name="robot_localization_listener",
+            #     output="screen",
+            #     parameters=[rl_params_file, {"use_sim_time": True}],
+            #     remappings=[("odom/filtered","odometry/global"),
+            #                 ("acceleration/filtered","accel/filtered")]
+            # ),
 
             # launch_ros.actions.Node(
             #     package="robot_localization",
@@ -41,9 +41,25 @@ def generate_launch_description():
                 executable="robot_localization_listener_node",
                 name="robot_localization_listener",
                 output="screen",
-                parameters=[rl_params_file, {"use_sim_time": True}],
-                remappings=[("odom/filtered","odometry/global"),
-                             ("acceleration/filtered","accel/filtered")]
+                parameters=[{"process_noise_covariance":[1.0,   0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    1.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.001,   0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.3,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.3,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.01,   0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.5,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.5,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.1,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.3,    0.0,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.3,    0.0,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.3,    0.0,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.3,    0.0,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.3,    0.0,
+                                                         0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.3]}]
+                #parameters=[rl_params_file, {"use_sim_time": True}],
+                #remappings=[("odom/filtered","odometry/global"),
+                #              ("acceleration/filtered","accel/filtered")],
+                #prefix=["xterm -font 10x20 -g 100x25 -e gdb -ex run --args"]
             ),
         ]
     )

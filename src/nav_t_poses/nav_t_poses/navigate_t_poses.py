@@ -37,7 +37,7 @@ def main():
     
 
     positions = []  # Vector to store Odometry messages
-    with open('/home/marco/4d_thesis/src/saving_pose/poses_data.csv', 'r') as file:
+    with open('/home/marco/4d_thesis/src/saving_pose/data_poses.csv', 'r') as file:
         csv_reader = csv.reader(file)
     
         for row in csv_reader:
@@ -59,7 +59,7 @@ def main():
     
 
     # Wait for navigation to fully activate, since autostarting nav2
-    navigator.waitUntilNav2Active()
+    navigator.waitUntilNav2Active(localizer="robot_localization")
     
 
     # If desired, you can change or load the map as well

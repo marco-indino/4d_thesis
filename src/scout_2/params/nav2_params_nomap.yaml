@@ -199,15 +199,15 @@ controller_server:
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 5.0
-      publish_frequency: 5.0
+      update_frequency: 10.0
+      publish_frequency: 10.0
       global_frame: odom
       robot_base_frame: base_footprint
       use_sim_time: True
       static_map: false
       rolling_window: true
-      width: 5
-      height: 5
+      width: 8
+      height: 8
       resolution: 0.05
       publish_voxel_map: true
       footprint: "[ [0.4, 0.34], [0.4, -0.34], [-0.4, -0.34], [-0.4, 0.34] ]"
@@ -243,8 +243,8 @@ local_costmap:
 global_costmap:
   global_costmap:
     ros__parameters:
-      update_frequency: 1.0
-      publish_frequency: 1.0
+      update_frequency: 2.0
+      publish_frequency: 2.0
       global_frame: map
       robot_base_frame: base_footprint
       footprint: "[ [0.4, 0.34], [0.4, -0.34], [-0.4, -0.34], [-0.4, 0.34] ]"
@@ -257,7 +257,7 @@ global_costmap:
       height: 50
       track_unknown_space: true
       # no static map
-      plugins: ["obstacle_layer", "inflation_layer"] #"static_layer"
+      plugins: ["static_layer","obstacle_layer", "inflation_layer"] #"static_layer"
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -274,11 +274,11 @@ global_costmap:
           obstacle_min_range: 0.0
           # outdoors there will probably be more inf points
           inf_is_valid: true
-      # static_layer:
-      #   plugin: "nav2_costmap_2d::StaticLayer"
-      #   map_subscribe_transient_local: True
-      #   subscribe_to_updates: true
-      #   transform_tolerance: 0.1
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+        subscribe_to_updates: true
+        transform_tolerance: 0.1
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 1.0
@@ -301,7 +301,7 @@ map_saver:
 
 planner_server:
   ros__parameters:
-    expected_planner_frequency: 5.0
+    expected_planner_frequency: 1.0
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
@@ -357,6 +357,12 @@ behavior_server:
     max_rotational_vel: 1.0
     min_rotational_vel: 0.4
     rotational_acc_lim: 3.2
+
+
+robot_state_publisher:
+  ros__parameters:
+    use_sim_time: True
+
 
 # waypoint_follower:
 #   ros__parameters:
