@@ -72,6 +72,12 @@ def generate_launch_description():
         remappings=[('imu/data_raw','imu')]
     )
 
+    scan_to_odom = Node(
+        package= 'lidar_odometry',
+        executable='lidar_odometry_node',
+        output='screen',
+    )
+
     # Create the launch description and populate
     ld = LaunchDescription()
 
@@ -89,7 +95,10 @@ def generate_launch_description():
     #spawn_entity
     ld.add_action(spawn_entity)
 
-    #imu fileter
-    ld.add_action(imu_filter_node)
+    #imu filter
+    #ld.add_action(imu_filter_node)
+
+    #scan_to_odom
+    ld.add_action(scan_to_odom)
 
     return ld

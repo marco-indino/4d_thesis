@@ -101,6 +101,10 @@ def main():
         inspection_pose.pose.orientation.z = pt[4]
         inspection_pose.pose.orientation.w = pt[5]
         check_poses.append(inspection_pose)
+            
+
+
+
 
     #go through poses
     navigator.goThroughPoses(goal_poses)

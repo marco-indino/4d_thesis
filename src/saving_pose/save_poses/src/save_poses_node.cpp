@@ -15,7 +15,7 @@ public:
     distance_threshold = 0.8;
 
     std::cout<<"nodo avviato"<<std::endl;
-    subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("/odom", 10, std::bind(&PoseCSVLogger::poseCallback, this, std::placeholders::_1));
+    subscription_ = this->create_subscription<nav_msgs::msg::Odometry>("/odometry/global", 10, std::bind(&PoseCSVLogger::poseCallback, this, std::placeholders::_1));
 
     csv_file_.open("/home/marco/4d_thesis/src/saving_pose/poses_data.csv");  //labirinto
     //csv_file_.open("/home/marco/4d_thesis/src/saving_pose/goandturn.csv");   //labirinto test

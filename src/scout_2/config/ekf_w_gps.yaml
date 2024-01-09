@@ -187,7 +187,7 @@ ekf_filter_node_map:
     frequency: 30.0
     #sensor_timeout: 0.0
     two_d_mode: true
-    transform_time_offset: 0.4 #this line needs to adjust the tf for different rate publisher between sensors
+    transform_time_offset: 0.3 #this line needs to adjust the tf for different rate publisher between sensors
     #transform_timeout: 0.0
     print_diagnostics: true
     debug: false
@@ -218,9 +218,9 @@ ekf_filter_node_map:
     #odom0_pose_rejection_threshold: 0.5
     #odom0_twist_rejection_threshold: 0.5
 
-    odom1: odometry/gps
+    odom1: scan_odom
     odom1_config: [true,  true,  false,
-                   false, false, false,
+                   false, false, true,
                    false, false, false,
                    false, false, false,
                    false, false, false]
@@ -231,20 +231,20 @@ ekf_filter_node_map:
     #odom1_pose_rejection_threshold: 0.5
     #odom1_twist_rejection_threshold: 0.5
 
-    imu0: imu/data
-    imu0_config: [false, false, false,
-                  false,  false,  false,
-                  false, false, false,
-                  false,  false,  false,
-                  false,  false,  false]
-    #imu0_nodelay: false
-    imu0_differential: true # If using a real robot you might want to set this to true, since usually absolute measurements from real imu's are not very accurate
-    imu0_relative: false
-    imu0_queue_size: 10
-    #imu0_pose_rejection_threshold: 0.5                 # Note the difference in parameter names
-    #imu0_twist_rejection_threshold: 0.5                #
-    #imu0_linear_acceleration_rejection_threshold: 0.5  #
-    imu0_remove_gravitational_acceleration: true
+    # imu0: imu/data
+    # imu0_config: [false, false, false,
+    #               false,  false,  false,
+    #               false, false, false,
+    #               false,  false,  false,
+    #               false,  false,  false]
+    # #imu0_nodelay: false
+    # imu0_differential: true # If using a real robot you might want to set this to true, since usually absolute measurements from real imu's are not very accurate
+    # imu0_relative: false
+    # imu0_queue_size: 10
+    # #imu0_pose_rejection_threshold: 0.5                 # Note the difference in parameter names
+    # #imu0_twist_rejection_threshold: 0.5                #
+    # #imu0_linear_acceleration_rejection_threshold: 0.5  #
+    # imu0_remove_gravitational_acceleration: true
 
     use_control: false
     
@@ -269,7 +269,7 @@ navsat_transform:
     use_sim_time: true
     frequency: 30.0
     delay: 3.0
-    magnetic_declination_radians: 0.0  # For lat/long of Milano, Italia
+    magnetic_declination_radians: 0.0 
     yaw_offset: 0.0 # if IMU reads 0 when facing magnetic north instead of east then set parameter to pi/2
     zero_altitude: true
     broadcast_cartesian_transform: true

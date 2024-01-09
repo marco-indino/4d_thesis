@@ -10,7 +10,7 @@ bt_navigator:
   ros__parameters:
     global_frame: map
     robot_base_frame: base_footprint
-    odom_topic: /odom
+    odom_topic: /odometry/global
     bt_loop_duration: 10
     default_server_timeout: 20
     # navigators: ["navigate_to_pose", "navigate_through_poses"]
@@ -152,7 +152,7 @@ controller_server:
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
     min_theta_velocity_threshold: 0.001
-    odom_topic: /odom #"diff_drive_controller/odom"
+    odom_topic: /odometry/global #"diff_drive_controller/odom"
     progress_checker_plugins: "progress_checker" # progress_checker_plugin: "progress_checker" For Humble and older
     current_goal_checker_plugin: "goal_checker"
     controller_plugins: ["FollowPath"]
@@ -199,8 +199,8 @@ controller_server:
 local_costmap:
   local_costmap:
     ros__parameters:
-      update_frequency: 10.0
-      publish_frequency: 10.0
+      update_frequency: 5.0
+      publish_frequency: 5.0
       global_frame: odom
       robot_base_frame: base_footprint
       use_sim_time: True
@@ -227,11 +227,11 @@ local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /scan #/ouster/points
+          topic: /points #/scan #/ouster/points
           max_obstacle_height: 2.0
           clearing: True
           marking: True
-          data_type: "LaserScan" #"PointCloud2"
+          data_type: "PointCloud2"  #"LaserScan" 
           raytrace_max_range: 12.0
           raytrace_min_range: 0.0
           obstacle_max_range: 12.0
@@ -301,7 +301,7 @@ map_saver:
 
 planner_server:
   ros__parameters:
-    expected_planner_frequency: 1.0
+    expected_planner_frequency: 0.5
     planner_plugins: ["GridBased"]
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"
