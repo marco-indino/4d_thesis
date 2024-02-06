@@ -4,6 +4,41 @@
        additional URDF, set the HUSKY_URDF_EXTRAS environment variable
        to the full path of the file you would like included. -->
 
+   <!-- <link name="square1">
+      <visual>
+        <geometry>
+          <box size="0.12 0.12 0.2"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+        <material name="Gray">
+          <color rgba="0.8 0.8 0.2 1" />
+        </material>
+      </visual>
+    </link>
+
+    <joint name="fixed" type="fixed">
+        <parent link="base_link"/>
+        <child link="square1"/>
+        <origin rpy="0 0 0" xyz="0.1 0 0.1"/>
+    </joint> -->
+
+    <!-- <link name="bar1">
+      <visual>
+        <geometry>
+          <box size="0.01 0.01 0.3"/>
+        </geometry>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+      </visual>
+    </link>
+
+    <joint name="fixed" type="fixed">
+        <parent link="base_link"/>
+        <child link="bar1"/>
+        <origin rpy="0 0 0" xyz="0.0 0.06 0.3"/>
+    </joint> -->
+
+
+
     <link name="os_sensor_link">
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
@@ -11,7 +46,7 @@
                 <mesh filename="file:///home/marco/4d_thesis/src/scout_2/meshes/os1_64.stl" scale="1.5 1.5 1.5"/>
             </geometry>
             <material name="Gray">
-                <color rgba="0.5 0.5 0.5 1" />
+                <color rgba="0.8 0.8 0.8 1" />
             </material>
         </visual>
         
@@ -20,7 +55,7 @@
     <joint name="os_sensor" type="fixed">
         <parent link="base_link"/>
         <child link="os_sensor_link"/>
-        <origin rpy="0 0 0" xyz="0.1 0.0 0.714"/>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.5"/>
     </joint>
 
     <gazebo reference="os_sensor_link">
@@ -38,8 +73,8 @@
                     </horizontal>
                 </scan>
                 <range>
-                    <min>0.1</min>
-                    <max>12</max>
+                    <min>0.3</min>
+                    <max>30</max>
                 </range>
             </ray>
             <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
@@ -194,7 +229,7 @@
     <gazebo reference="os_sensor_link">
       <sensor type="ray" name="lidar">
         <pose>0 0 0 0 0 0</pose>
-        <visualize>true</visualize>
+        <visualize>false</visualize>
         <update_rate>10</update_rate>
         <ray>
           <scan>
@@ -213,7 +248,7 @@
           </scan>
           <range>
             <min>0.3</min>
-            <max>12</max>
+            <max>30</max>
             <resolution>0.03</resolution>
           </range>
           <noise>

@@ -202,9 +202,6 @@
 
 
 
-
-
-
     <!-- Additional definitions -->
     <xacro:include filename="$(arg urdf_extras)" />
 

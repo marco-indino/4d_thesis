@@ -158,7 +158,7 @@ def main():
                 while recupero == 1:
                     feedback=navigator.getFeedback()
                     pose_tmp=feedback.current_pose
-                    while (abs(check_poses[0].pose.position.x  - pose_tmp.pose.position.x) < 4.5) and (abs(check_poses[0].pose.position.y - pose_tmp.pose.position.y) < 4.5 ) and wait==0 and len(check_poses)>10: 
+                    while (abs(check_poses[0].pose.position.x  - pose_tmp.pose.position.x) < 2.5) and (abs(check_poses[0].pose.position.y - pose_tmp.pose.position.y) < 2.5 ) and wait==0 and len(check_poses)>10: 
                         #del check_poses[j]
                         if len(check_poses)>1:
                             check_poses.pop(0)
@@ -230,7 +230,7 @@ def main():
                             if new_feedback and i % 5 == 0:
                                 print('Estimated distance remaining : ' + '{0:.3f}'.format(new_feedback.distance_remaining) )
                             
-                            if new_feedback.distance_remaining > 2*(distance_tmp):  #parameters to be tuned based on the map and the environment
+                            if new_feedback.distance_remaining > 2.0*(distance_tmp):  #parameters to be tuned based on the map and the environment
                                 home=1
                                 navigator.cancelTask()
                             
@@ -249,12 +249,12 @@ def main():
                                 done=1
                                 last_poses=1
                             elif result_base2 == TaskResult.CANCELED:
-                                print('return to base 3 canceled')
+                                print('return to base 3 canceled, ROBOT STUCK-> HUMAN INTERVANTION REQUIRED')
                                 recupero=0
                                 done=1
                                 last_poses=1
                             elif result_base2 == TaskResult.FAILED:
-                                print('return to base 3 failed')
+                                print('return to base 3 failed, ROBOT STUCK-> HUMAN INTERVANTION REQUIRED')
                                 recupero=0
                                 done=1
                                 last_poses=1
@@ -302,8 +302,9 @@ def main():
         elif result == TaskResult.FAILED:
             print('Goal failed!')
             print('ritorno alla base')
-            navigator.goToPose(initial_pose,'/home/marco/4d_thesis/src/scout_2/config/navigate_to_pose_w_replanning_and_recovery.xml')
-            while (not navigator.isTaskComplete):
+            navigator.goToPose(initial_pose)#'/home/marco/4d_thesis/src/scout_2/config/navigate_to_pose_w_replanning_and_recovery.xml,')
+            sleep(2.0)
+            while ((not navigator.isTaskComplete())):
                 i = i + 1
                 feedback = navigator.getFeedback()
                 if (feedback and (i % 5 == 0)):
