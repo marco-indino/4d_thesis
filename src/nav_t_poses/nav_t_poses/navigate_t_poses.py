@@ -37,7 +37,7 @@ def main():
     
 
     positions = []  # Vector to store Odometry messages
-    with open('/home/marco/4d_thesis/src/saving_pose/data_poses.csv', 'r') as file:
+    with open('/home/marco/4d_thesis/src/saving_pose/poses_data.csv', 'r') as file:
         csv_reader = csv.reader(file)
     
         for row in csv_reader:
@@ -116,6 +116,8 @@ def main():
     count=0
     last_poses=0
     home=0
+    discard_val=3.0
+    waiting_time=7.0
 
     done = 0
     last_j_changed=time.time()
@@ -148,7 +150,7 @@ def main():
                 #last_j_changed=navigator.get_clock().now().nanoseconds/1e9
                 last_j_changed=time.time()
 
-            if (time.time() - last_j_changed )>= 7:
+            if (time.time() - last_j_changed )>= waiting_time:
                 print("Robot has been stuck for 7 seconds. Cancelling task.")
                 navigator.cancelTask()
                 sleep(3.0)
@@ -158,7 +160,7 @@ def main():
                 while recupero == 1:
                     feedback=navigator.getFeedback()
                     pose_tmp=feedback.current_pose
-                    while (abs(check_poses[0].pose.position.x  - pose_tmp.pose.position.x) < 2.5) and (abs(check_poses[0].pose.position.y - pose_tmp.pose.position.y) < 2.5 ) and wait==0 and len(check_poses)>10: 
+                    while (abs(check_poses[0].pose.position.x  - pose_tmp.pose.position.x) < discard_val) and (abs(check_poses[0].pose.position.y - pose_tmp.pose.position.y) < discard_val ) and wait==0 and len(check_poses)>5: 
                         #del check_poses[j]
                         if len(check_poses)>1:
                             check_poses.pop(0)
@@ -174,7 +176,7 @@ def main():
                     distance_x= check_poses[0].pose.position.x - pose_tmp.pose.position.x
                     distance_y= check_poses[0].pose.position.y - pose_tmp.pose.position.y
                     distance_tmp= math.sqrt((distance_x*distance_x + distance_y*distance_y))
-                    if len(check_poses)<11:
+                    if len(check_poses)<6:
                         navigator.goToPose(check_poses[len(check_poses)-1],'/home/marco/4d_thesis/src/scout_2/config/navigate_to_pose_w_replanning_and_recovery.xml')
                         sleep(3.0)
                         while((not navigator.isTaskComplete())):

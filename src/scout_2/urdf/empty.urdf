@@ -55,7 +55,7 @@
     <joint name="os_sensor" type="fixed">
         <parent link="base_link"/>
         <child link="os_sensor_link"/>
-        <origin rpy="0 0 0" xyz="0.0 0.0 0.5"/>
+        <origin rpy="0 0 0" xyz="0.0 0.0 0.2"/>
     </joint>
 
     <gazebo reference="os_sensor_link">

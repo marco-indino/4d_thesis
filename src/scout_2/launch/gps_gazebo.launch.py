@@ -96,7 +96,7 @@ def generate_launch_description():
     ld.add_action(spawn_entity)
 
     #imu filter
-    #ld.add_action(imu_filter_node)
+    ld.add_action(imu_filter_node)
 
     #scan_to_odom
     ld.add_action(scan_to_odom)
